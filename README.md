@@ -18,4 +18,6 @@
 	file3 - file with result - found file1 lines in file2, file2 line
 		is printed
 
-	Program prints progress (number of lines processed) to standar error output.
+	Program beeps a sound when found a match.
+
+	Program prints progress (number of lines processed) to standar error output and beeps a sound when finished.

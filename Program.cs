@@ -15,19 +15,36 @@ namespace search_in
                 return 1;
             }
 
-            var patternsFile = args[0];
-            var searchFile = args[1];
-            var pat = File.ReadAllLines(patternsFile, Encoding.UTF8);
+            var h = new HashSet<string>(File.ReadAllLines(args[0], Encoding.UTF8));
 
-            var h = new HashSet<string>(pat);
+            var lineCount = 0;
+            using (var reader = File.OpenText(args[1]))
+            {
+                while (reader.ReadLine() != null)
+                {
+                    lineCount++;
+                }
+            }
 
             long i = 0, f = 0;
 
-            using (var reader = new StreamReader(searchFile))
+            using (var reader = new StreamReader(args[1]))
             {
                 string line;
+
                 while ((line = reader.ReadLine()) != null)
                 {
+                    if (i % 100000 == 0)
+                    {
+                        Console.Error.Write($"\r");
+                        Console.Error.Write(string.Format("{0:N0}", i));
+                        Console.Error.Write($"/");
+                        Console.Error.Write(string.Format("{0:N0}", lineCount));
+                        if (f > 0)
+                        {
+                            Console.Error.Write(" found: " + f);
+                        }
+                    }
 
                     if (h.Contains(line[..line.IndexOf(' ')]))
                     {
@@ -36,22 +53,19 @@ namespace search_in
                         f++;
                     }
 
-                    if (i % 100000 == 0)
-                    {
-                        Console.Error.Write($"\r");
-                        Console.Error.Write(string.Format("{0:N0}", i));
-                        if (f > 0)
-                        {
-                            Console.Error.Write(" found: " + f);
-                        }
-                    }
-
                     i++;
                 }
             }
 
             Console.Error.Write($"\r");
-            Console.Error.WriteLine(string.Format("{0:N0}", i));
+            Console.Error.Write(string.Format("{0:N0}", i));
+            Console.Error.Write($"/");
+            Console.Error.Write(string.Format("{0:N0}", lineCount));
+            if (f > 0)
+            {
+                Console.Error.Write(" found: " + f);
+            }
+            Console.WriteLine();
             Console.Beep();
             Console.Error.WriteLine("End of program");
             return 0;
