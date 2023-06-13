@@ -36,7 +36,7 @@ namespace search_in
                         f++;
                     }
 
-                    if (i % 10000 == 0)
+                    if (i % 100000 == 0)
                     {
                         Console.Error.Write($"\r");
                         Console.Error.Write(string.Format("{0:N0}", i));
