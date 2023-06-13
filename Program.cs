@@ -21,7 +21,7 @@ namespace search_in
 
             var h = new HashSet<string>(pat);
 
-            int i = 0, f = 0;
+            long i = 0, f = 0;
 
             using (var reader = new StreamReader(searchFile))
             {
@@ -36,7 +36,7 @@ namespace search_in
                         f++;
                     }
 
-                    if (i % 1000 == 0)
+                    if (i % 10000 == 0)
                     {
                         Console.Error.Write($"\r");
                         Console.Error.Write(string.Format("{0:N0}", i));
