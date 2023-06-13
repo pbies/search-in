@@ -3,6 +3,8 @@
 	Use:
 
 	search-in file1 file2 > file3
+	or
+	search-in file1 file2 | tee -a file3
 
 	Where:
 
