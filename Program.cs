@@ -27,6 +27,7 @@ namespace search_in
             }
 
             long i = 0, f = 0;
+            decimal p;
 
             using (var reader = new StreamReader(args[1]))
             {
@@ -44,14 +45,15 @@ namespace search_in
 
                     if (i % 1000000 == 0)
                     {
-                        Console.Error.Write(string.Format("\r{0:N0}/{1:N0} found: {2}", i, lineCount, f));
+                        p = (decimal)i / (decimal)lineCount * (decimal)100;
+                        Console.Error.Write(string.Format("\r{0:N0}/{1:N0} ({2:N2}%) found: {3}", i, lineCount, p, f));
                     }
                     i++;
                 }
             }
 
-            Console.Error.Write(string.Format("\r{0:N0}/{1:N0} found: {2}", i, lineCount, f));
-            Console.Error.WriteLine();
+            p = (decimal)i / (decimal)lineCount * (decimal)100;
+            Console.Error.WriteLine(string.Format("\r{0:N0}/{1:N0} ({2:N2}%) found: {3}", i, lineCount, p, f));
             Console.Beep();
             Console.Error.WriteLine("End of program");
             return 0;
