@@ -17,7 +17,7 @@ namespace search_in
 
             var h = new HashSet<string>(File.ReadAllLines(args[0], Encoding.UTF8));
 
-            var lineCount = 0;
+            long lineCount = 0;
             using (var reader = File.OpenText(args[1]))
             {
                 while (reader.ReadLine() != null)
@@ -34,38 +34,24 @@ namespace search_in
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (i % 100000 == 0)
-                    {
-                        Console.Error.Write($"\r");
-                        Console.Error.Write(string.Format("{0:N0}", i));
-                        Console.Error.Write($"/");
-                        Console.Error.Write(string.Format("{0:N0}", lineCount));
-                        if (f > 0)
-                        {
-                            Console.Error.Write(" found: " + f);
-                        }
-                    }
-
                     if (h.Contains(line[..line.IndexOf(' ')]))
                     {
-                        Console.WriteLine($"\r" + line);
+                        Console.Error.Write("\r");
+                        Console.WriteLine(line);
                         Console.Beep();
                         f++;
                     }
 
+                    if (i % 1000000 == 0)
+                    {
+                        Console.Error.Write(string.Format("\r{0:N0}/{1:N0} found: {2}", i, lineCount, f));
+                    }
                     i++;
                 }
             }
 
-            Console.Error.Write($"\r");
-            Console.Error.Write(string.Format("{0:N0}", i));
-            Console.Error.Write($"/");
-            Console.Error.Write(string.Format("{0:N0}", lineCount));
-            if (f > 0)
-            {
-                Console.Error.Write(" found: " + f);
-            }
-            Console.WriteLine();
+            Console.Error.Write(string.Format("\r{0:N0}/{1:N0} found: {2}", i, lineCount, f));
+            Console.Error.WriteLine();
             Console.Beep();
             Console.Error.WriteLine("End of program");
             return 0;
