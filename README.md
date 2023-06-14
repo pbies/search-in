@@ -20,4 +20,5 @@
 
 	Program beeps a sound when found a match.
 
-	Program prints progress (number of lines processed) to standar error output and beeps a sound when finished.
+	Program prints progress (number of lines processed) to standar error output and beeps
+		a sound when finished.
